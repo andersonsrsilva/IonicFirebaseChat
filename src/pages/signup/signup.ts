@@ -3,8 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserProvider} from '../../providers/user/user.provider';
 import {AuthProvider} from '../../providers/auth/auth.provider';
 import {FirebaseAuthState} from 'angularfire2';
-import {AlertController, Loading, LoadingController} from 'ionic-angular';
+import {AlertController, Loading, LoadingController, NavController} from 'ionic-angular';
 import {BaseProvider} from '../../providers/base/base.provider';
+import {HomePage} from '../home/home';
 
 @Component({
   selector: 'page-signup',
@@ -17,6 +18,7 @@ export class SignupPage extends BaseProvider {
   constructor(public alertCrtl: AlertController,
               public authProvider: AuthProvider,
               public formBuild: FormBuilder,
+              public navCrtl: NavController,
               public userProvider: UserProvider,
               public loadingCtrl: LoadingController) {
     super();
@@ -49,6 +51,7 @@ export class SignupPage extends BaseProvider {
 
             this.userProvider.create(formUser).then(() => {
               console.log('Usuario cadastrado!');
+              this.navCrtl.setRoot(HomePage);
               loadging.dismiss();
             }).catch((error: any) => {
               console.log(error);

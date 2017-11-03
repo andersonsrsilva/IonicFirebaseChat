@@ -8,9 +8,10 @@ import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {SignupPage} from '../pages/signup/signup';
 
-import {AngularFireModule, FirebaseAppConfig} from 'angularfire2';
+import {AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig} from 'angularfire2';
 import {UserProvider} from '../providers/user/user.provider';
 import {AuthProvider} from '../providers/auth/auth.provider';
+import {SigninPage} from '../pages/signin/signin';
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyBVzJrecxPITUBZ91S0L9JRlmWdeeqLxC0",
@@ -20,21 +21,28 @@ const firebaseAppConfig: FirebaseAppConfig = {
   messagingSenderId: "160084383993"
 };
 
+const firebaseAuthConfig = {
+  provider: AuthProviders.Custom,
+  method: AuthMethods.Password
+};
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseAppConfig),
+    AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage,
   ],
   providers: [
