@@ -4,12 +4,13 @@ import {UserProvider} from '../../providers/user/user.provider';
 import {AuthProvider} from '../../providers/auth/auth.provider';
 import {FirebaseAuthState} from 'angularfire2';
 import {AlertController, Loading, LoadingController} from 'ionic-angular';
+import {BaseProvider} from '../../providers/base/base.provider';
 
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
 })
-export class SignupPage {
+export class SignupPage extends BaseProvider {
 
   signupForm: FormGroup;
 
@@ -18,6 +19,7 @@ export class SignupPage {
               public formBuild: FormBuilder,
               public userProvider: UserProvider,
               public loadingCtrl: LoadingController) {
+    super();
 
     let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
@@ -27,33 +29,42 @@ export class SignupPage {
       email: ['', Validators.compose([Validators.required, Validators.pattern(emailRegex)])],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-
   }
 
   onSubmit(): void {
     let formUser = this.signupForm.value;
     let loadging: Loading = this.showLoading();
+    let username: string = formUser.username;
 
-    this.authProvider.createAuthUser({
-      email: formUser.email,
-      password: formUser.password
-    }).then((authState: FirebaseAuthState) => {
-      delete formUser.password;
-      formUser.uid = authState.auth.uid;
+    this.userProvider.userExists(username)
+      .first()
+      .subscribe((userExists: boolean) => {
+        if (!userExists) {
+          this.authProvider.createAuthUser({
+            email: formUser.email,
+            password: formUser.password
+          }).then((authState: FirebaseAuthState) => {
+            delete formUser.password;
+            formUser.uid = authState.auth.uid;
 
-      this.userProvider.create(formUser).then(() => {
-        console.log('Usuario cadastrado!');
-        loadging.dismiss();
-      }).catch((error: any) => {
-        console.log(error);
-        loadging.dismiss();
-        this.showAlert(error);
+            this.userProvider.create(formUser).then(() => {
+              console.log('Usuario cadastrado!');
+              loadging.dismiss();
+            }).catch((error: any) => {
+              console.log(error);
+              loadging.dismiss();
+              this.showAlert(error);
+            });
+          }).catch((error: any) => {
+            console.log(error);
+            loadging.dismiss();
+            this.showAlert(error);
+          });
+        } else {
+          this.showAlert(`O username ${username} já está sendo usado em outra conta!`);
+          loadging.dismiss();
+        }
       });
-    }).catch((error: any) => {
-      console.log(error);
-      loadging.dismiss();
-      this.showAlert(error);
-    });
   }
 
   private showLoading(): Loading {
