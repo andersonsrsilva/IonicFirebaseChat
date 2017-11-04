@@ -41,10 +41,10 @@ export class SigninPage extends BaseProvider {
           loading.dismiss();
         }
       }).catch((error: any) => {
-        console.log(error);
-        loading.dismiss();
-        this.showAlert(error);
-      });
+      console.log(error);
+      loading.dismiss();
+      this.showAlert(error);
+    });
   }
 
   onSignup(): void {
@@ -68,5 +68,14 @@ export class SigninPage extends BaseProvider {
     }).present();
   }
 
+  onHomePage(): void {
+    this.navCtrl.push(HomePage)
+      .then((hasAccess: boolean) => {
+        console.log('Autorizado? ', hasAccess);
+      }).catch(err => {
+      console.log( err);
+      //mensagem de erro ao consultar
+    });
+  }
 
 }

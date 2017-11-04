@@ -12,6 +12,8 @@ import {AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig} from '
 import {UserProvider} from '../providers/user/user.provider';
 import {AuthProvider} from '../providers/auth/auth.provider';
 import {SigninPage} from '../pages/signin/signin';
+import {CustomLoggedHeaderComponent} from '../components/custom-logged-header/custom-logged-header.component';
+import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyBVzJrecxPITUBZ91S0L9JRlmWdeeqLxC0",
@@ -28,8 +30,10 @@ const firebaseAuthConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
+    CapitalizePipe,
+    CustomLoggedHeaderComponent,
     HomePage,
+    MyApp,
     SigninPage,
     SignupPage,
   ],
