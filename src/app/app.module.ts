@@ -15,6 +15,7 @@ import {SigninPage} from '../pages/signin/signin';
 import {CustomLoggedHeaderComponent} from '../components/custom-logged-header/custom-logged-header.component';
 import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 import {ChatPage} from '../pages/chat/chat';
+import {ChatProvider} from '../providers/chat/chat.provider';
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyBVzJrecxPITUBZ91S0L9JRlmWdeeqLxC0",
@@ -57,7 +58,8 @@ const firebaseAuthConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    AuthProvider
+    AuthProvider,
+    ChatProvider
   ]
 })
 export class AppModule {
