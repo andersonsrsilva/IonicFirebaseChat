@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, FirebaseAuthState, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {User} from '../../models/user.model';
 import {BaseProvider} from '../base/base.provider';
 import {Observable} from 'rxjs/Observable';
@@ -8,14 +8,24 @@ import {Observable} from 'rxjs/Observable';
 export class UserProvider extends BaseProvider {
 
   users: FirebaseListObservable<User[]>;
+  currentUser: FirebaseObjectObservable<User>;
 
   constructor(private af: AngularFire) {
     super();
     this.users = this.af.database.list('/users');
+    this.listenAuthState();
   }
 
-  create(user: User): firebase.Promise<void> {
-    return this.af.database.object(`/users/${user.uid}`)
+  private listenAuthState(): void {
+    this.af.auth.subscribe((authState: FirebaseAuthState) => {
+      if (authState) {
+        this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`);
+      }
+    });
+  }
+
+  create(user: User, uuid: string): firebase.Promise<void> {
+    return this.af.database.object(`/users/${uuid}`)
       .set(user)
       .catch(this.handlePromiseError);
   }

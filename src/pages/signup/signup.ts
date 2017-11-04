@@ -47,9 +47,10 @@ export class SignupPage extends BaseProvider {
             password: formUser.password
           }).then((authState: FirebaseAuthState) => {
             delete formUser.password;
-            formUser.uid = authState.auth.uid;
+            let uuid: string = authState.auth.uid;
 
-            this.userProvider.create(formUser).then(() => {
+            this.userProvider.create(formUser, uuid)
+              .then(() => {
               console.log('Usuario cadastrado!');
               this.navCrtl.setRoot(HomePage);
               loadging.dismiss();

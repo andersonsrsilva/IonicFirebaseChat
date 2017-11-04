@@ -5,6 +5,7 @@ import {User} from '../../models/user.model';
 import {UserProvider} from '../../providers/user/user.provider';
 import {FirebaseListObservable} from 'angularfire2';
 import {AuthProvider} from '../../providers/auth/auth.provider';
+import {ChatPage} from '../chat/chat';
 
 @Component({
   selector: 'page-home',
@@ -33,6 +34,9 @@ export class HomePage {
   }
 
   onChatCreate(user: User) {
-    console.log(user);
+    console.log("User: ", user);
+    this.navCtrl.push(ChatPage, {
+      recipientUser: user
+    });
   }
 }
