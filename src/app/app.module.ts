@@ -1,4 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -16,6 +17,7 @@ import {CustomLoggedHeaderComponent} from '../components/custom-logged-header/cu
 import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 import {ChatPage} from '../pages/chat/chat';
 import {ChatProvider} from '../providers/chat/chat.provider';
+
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyBVzJrecxPITUBZ91S0L9JRlmWdeeqLxC0",
@@ -42,6 +44,7 @@ const firebaseAuthConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig),
   ],

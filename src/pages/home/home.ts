@@ -6,6 +6,9 @@ import {UserProvider} from '../../providers/user/user.provider';
 import {FirebaseListObservable} from 'angularfire2';
 import {AuthProvider} from '../../providers/auth/auth.provider';
 import {ChatPage} from '../chat/chat';
+import {ChatProvider} from '../../providers/chat/chat.provider';
+import {Chat} from '../../models/chat.model';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +21,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
               public userProvider: UserProvider,
-              public authProvider: AuthProvider) {
+              public authProvider: AuthProvider,
+              public chatProvider: ChatProvider) {
   }
 
   ionViewCanEnter(): Promise<boolean> {
@@ -33,10 +37,29 @@ export class HomePage {
     this.navCtrl.push(SignupPage);
   }
 
-  onChatCreate(user: User) {
-    console.log("User: ", user);
+  onChatCreate(recipientUser: User) {
+
+    this.userProvider.currentUser
+      .first()
+      .subscribe((currentUser: User) => {
+        this.chatProvider.getDeepChat(currentUser.$key, recipientUser.$key)
+          .first()
+          .subscribe((chat: Chat) => {
+              if(chat.hasOwnProperty('$value')) {
+                let timestamp = firebase.database.ServerValue.TIMESTAMP;
+
+                let chat1 = new Chat('', timestamp, recipientUser.name, '');
+                this.chatProvider.create(chat1, currentUser.$key, recipientUser.$key);
+
+                let chat2 = new Chat('', timestamp, recipientUser.name, '');
+                this.chatProvider.create(chat2, recipientUser.$key, currentUser.$key);
+              }
+          })
+      });
+
+    console.log("User: ", recipientUser);
     this.navCtrl.push(ChatPage, {
-      recipientUser: user
+      recipientUser: recipientUser
     });
   }
 }

@@ -3,14 +3,32 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BaseProvider} from '../base/base.provider';
 import {Chat} from '../../models/chat.model';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import {AngularFire, FirebaseAuthState, FirebaseObjectObservable} from 'angularfire2';
 
 @Injectable()
 export class ChatProvider extends BaseProvider {
 
+  chats: FirebaseObjectObservable<Chat[]>;
+
   constructor(public http: Http,
               public af: AngularFire) {
     super();
+    this.setChats();
+  }
+
+  private setChats(): void {
+    this.af.auth
+      .subscribe((authState: FirebaseAuthState) => {
+        if (authState) {
+          this.chats = <FirebaseObjectObservable<Chat[]>>this.af.database.list(`/chats/${authState.auth.uid}`, {
+            query: {
+              orderByChild: 'timestamp'
+            }
+          }).map((chats: Chat[]) => {
+            return chats.reverse();
+          }).catch(this.handleObservableError);
+        }
+      });
   }
 
   create(chat: Chat, userId1: string, userId2: string): firebase.Promise<void> {
