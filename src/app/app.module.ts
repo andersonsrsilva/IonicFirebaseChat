@@ -10,13 +10,14 @@ import {HomePage} from '../pages/home/home';
 import {SignupPage} from '../pages/signup/signup';
 
 import {AngularFireModule, AuthMethods, AuthProviders, FirebaseAppConfig} from 'angularfire2';
-import {UserProvider} from '../providers/user/user.provider';
-import {AuthProvider} from '../providers/auth/auth.provider';
+import {UserProvider} from '../providers/user/user';
+import {AuthProvider} from '../providers/auth/auth';
 import {SigninPage} from '../pages/signin/signin';
 import {CustomLoggedHeaderComponent} from '../components/custom-logged-header/custom-logged-header.component';
 import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 import {ChatPage} from '../pages/chat/chat';
-import {ChatProvider} from '../providers/chat/chat.provider';
+import {ChatProvider} from '../providers/chat/chat';
+import { MessageProvider } from '../providers/message/message';
 
 
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -62,7 +63,9 @@ const firebaseAuthConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
     AuthProvider,
-    ChatProvider
+    ChatProvider,
+    MessageProvider,
+    MessageProvider
   ]
 })
 export class AppModule {

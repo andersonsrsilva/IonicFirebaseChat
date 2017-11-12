@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFire, FirebaseAuthState, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 import {User} from '../../models/user.model';
-import {BaseProvider} from '../base/base.provider';
+import {BaseProvider} from '../base/base';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
@@ -50,6 +50,11 @@ export class UserProvider extends BaseProvider {
     }).map((users: User[]) => {
       return users.length > 0;
     }).catch(this.handleObservableError);
+  }
+
+  getUserById(userId: string): FirebaseObjectObservable<User> {
+    return <FirebaseObjectObservable<User>> this.af.database.object(`/users/${userId}`)
+      .catch(this.handleObservableError);
   }
 
 }

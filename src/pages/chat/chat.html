@@ -4,7 +4,7 @@
 
 <ion-content padding>
   <ion-list no-lines>
-    <ion-item *ngFor="let m of messages">{{ m }}</ion-item>
+    <ion-item *ngFor="let message of messages | async">{{ m.text }}</ion-item>
   </ion-list>
 </ion-content>
 

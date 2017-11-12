@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
 import {User} from '../../models/user.model';
-import {UserProvider} from '../../providers/user/user.provider';
+import {UserProvider} from '../../providers/user/user';
 import {FirebaseListObservable} from 'angularfire2';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {AuthProvider} from '../../providers/auth/auth';
 import {ChatPage} from '../chat/chat';
-import {ChatProvider} from '../../providers/chat/chat.provider';
+import {ChatProvider} from '../../providers/chat/chat';
 import {Chat} from '../../models/chat.model';
 import firebase from 'firebase';
 
@@ -16,6 +16,7 @@ import firebase from 'firebase';
 })
 export class HomePage {
 
+  chats: FirebaseListObservable<Chat[]>;
   users: FirebaseListObservable<User[]>;
   view: string = 'chats';
 
@@ -30,6 +31,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    this.chats = this.chatProvider.chats;
     this.users = this.userProvider.users;
   }
 
@@ -38,22 +40,21 @@ export class HomePage {
   }
 
   onChatCreate(recipientUser: User) {
-
     this.userProvider.currentUser
       .first()
       .subscribe((currentUser: User) => {
         this.chatProvider.getDeepChat(currentUser.$key, recipientUser.$key)
           .first()
           .subscribe((chat: Chat) => {
-              if(chat.hasOwnProperty('$value')) {
-                let timestamp = firebase.database.ServerValue.TIMESTAMP;
+            if (chat.hasOwnProperty('$value')) {
+              let timestamp = firebase.database.ServerValue.TIMESTAMP;
 
-                let chat1 = new Chat('', timestamp, recipientUser.name, '');
-                this.chatProvider.create(chat1, currentUser.$key, recipientUser.$key);
+              let chat1 = new Chat('', timestamp, recipientUser.name, '');
+              this.chatProvider.create(chat1, currentUser.$key, recipientUser.$key);
 
-                let chat2 = new Chat('', timestamp, recipientUser.name, '');
-                this.chatProvider.create(chat2, recipientUser.$key, currentUser.$key);
-              }
+              let chat2 = new Chat('', timestamp, recipientUser.name, '');
+              this.chatProvider.create(chat2, recipientUser.$key, currentUser.$key);
+            }
           })
       });
 
@@ -62,4 +63,18 @@ export class HomePage {
       recipientUser: recipientUser
     });
   }
+
+  onChatOpen(chat: Chat): void {
+    let recipientUserId: string = chat.$key;
+
+    this.userProvider.getUserById(recipientUserId)
+      .first()
+      .subscribe((user: User) => {
+        this.navCtrl.push(ChatPage, {
+          recipientUser: user
+        });
+      });
+  }
+
+
 }

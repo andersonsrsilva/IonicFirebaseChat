@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {FirebaseAuthState} from 'angularfire2';
-import {BaseProvider} from '../base/base.provider';
+import {BaseProvider} from '../base/base';
 
 @Injectable()
 export class AuthProvider extends BaseProvider {

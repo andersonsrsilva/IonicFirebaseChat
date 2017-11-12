@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {AlertController, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {BaseProvider} from '../../providers/base/base.provider';
+import {BaseProvider} from '../../providers/base/base';
 import {SignupPage} from '../signup/signup';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {AuthProvider} from '../../providers/auth/auth';
 import {HomePage} from '../home/home';
 
 @Component({

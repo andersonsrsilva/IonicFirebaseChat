@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AlertController, App, MenuController, NavController} from 'ionic-angular';
 import {SigninPage} from '../../pages/signin/signin';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {AuthProvider} from '../../providers/auth/auth';
 
 @Component({
   selector: 'base',

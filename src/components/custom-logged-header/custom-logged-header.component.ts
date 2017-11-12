@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {BaseComponent} from '../base/base.component';
 import {AlertController, App, MenuController} from 'ionic-angular';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {AuthProvider} from '../../providers/auth/auth';
 
 @Component({
   selector: 'custom-logged-header',

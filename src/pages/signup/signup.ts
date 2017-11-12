@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserProvider} from '../../providers/user/user.provider';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {UserProvider} from '../../providers/user/user';
+import {AuthProvider} from '../../providers/auth/auth';
 import {FirebaseAuthState} from 'angularfire2';
 import {AlertController, Loading, LoadingController, NavController} from 'ionic-angular';
-import {BaseProvider} from '../../providers/base/base.provider';
+import {BaseProvider} from '../../providers/base/base';
 import {HomePage} from '../home/home';
 
 @Component({

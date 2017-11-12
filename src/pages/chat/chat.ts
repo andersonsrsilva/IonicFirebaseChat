@@ -1,8 +1,11 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AuthProvider} from '../../providers/auth/auth.provider';
+import {AuthProvider} from '../../providers/auth/auth';
 import {User} from '../../models/user.model';
-import {UserProvider} from '../../providers/user/user.provider';
+import {UserProvider} from '../../providers/user/user';
+import {FirebaseListObservable} from "angularfire2";
+import {Message} from "../../models/message.model";
+import {MessageProvider} from "../../providers/message/message";
 
 @Component({
   selector: 'page-chat',
@@ -10,13 +13,14 @@ import {UserProvider} from '../../providers/user/user.provider';
 })
 export class ChatPage {
 
-  messages: string[] = [];
+  messages: FirebaseListObservable<Message[]>;
   pageTitle: string;
   sender: User;
   recipient: User;
 
   constructor(public authProvider: AuthProvider,
               public navCtrl: NavController,
+              public messageProvider: MessageProvider,
               public navParams: NavParams,
               public userProvider: UserProvider) {
   }
@@ -32,6 +36,16 @@ export class ChatPage {
       .first()
       .subscribe((currentUser: User) => {
         this.sender = currentUser;
+
+        this.messages = this.messageProvider.getMessages(this.sender.$key, this.recipient.$key);
+
+        this.messages
+          .first()
+          .subscribe((messages: Message[]) => {
+            if (messages.length === 0) {
+              this.messages = this.messageProvider.getMessages(this.recipient.$key, this.sender.$key);
+            }
+          });
       });
   }
 
