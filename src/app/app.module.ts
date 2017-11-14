@@ -18,6 +18,7 @@ import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 import {ChatPage} from '../pages/chat/chat';
 import {ChatProvider} from '../providers/chat/chat';
 import {MessageProvider} from '../providers/message/message';
+import {MessageBoxComponent} from "../components/message-box/message-box";
 
 
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -39,6 +40,7 @@ const firebaseAuthConfig = {
     ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
+    MessageBoxComponent,
     MyApp,
     SigninPage,
     SignupPage,
