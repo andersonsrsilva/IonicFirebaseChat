@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {BaseComponent} from '../base/base.component';
+import {BaseComponent} from '../base/base';
 import {AlertController, App, MenuController} from 'ionic-angular';
 import {AuthProvider} from '../../providers/auth/auth';
 
 @Component({
   selector: 'custom-logged-header',
-  templateUrl: 'custom-logged-header.component.html',
+  templateUrl: 'custom-logged-header.html',
 })
 export class CustomLoggedHeaderComponent extends BaseComponent {
 

@@ -5,7 +5,7 @@ import {AuthProvider} from '../../providers/auth/auth';
 
 @Component({
   selector: 'base',
-  templateUrl: 'base.component.html'
+  templateUrl: 'base.html'
 })
 export abstract class BaseComponent {
 

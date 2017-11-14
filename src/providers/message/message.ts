@@ -19,7 +19,7 @@ export class MessageProvider extends BaseProvider {
   }
 
   getMessages(userId1: string, userId2: string): FirebaseListObservable<Message[]> {
-    return <FirebaseListObservable<Message[]>>this.af.database.list(`/chats/${userId1}-${userId2}`, {
+    return <FirebaseListObservable<Message[]>>this.af.database.list(`/messages/${userId1}-${userId2}`, {
       query: {
         orderByChild: 'timestamp'
       }
