@@ -7,6 +7,10 @@
       <ion-segment-button value="users">Users</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>

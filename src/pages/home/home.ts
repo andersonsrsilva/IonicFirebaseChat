@@ -35,6 +35,30 @@ export class HomePage {
     this.users = this.userProvider.users;
   }
 
+  filterItems(event: any): void {
+    let searchTerm: string = event.target.value;
+
+    this.chats = this.chatProvider.chats;
+    this.users = this.userProvider.users;
+
+    if (searchTerm) {
+      switch (this.view) {
+        case 'chats':
+          this.chats = <FirebaseListObservable<Chat[]>>this.chats
+            .map((chats: Chat[]) => {
+              return chats.filter((chat: Chat) => (chat.title.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) > -1))
+            });
+          break;
+        case 'users':
+          this.users = <FirebaseListObservable<User[]>>this.users
+            .map((users: User[]) => {
+              return users.filter((user: User) => (user.name.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase()) > -1))
+            });
+          break;
+      }
+    }
+  }
+
   onSignup(): void {
     this.navCtrl.push(SignupPage);
   }
