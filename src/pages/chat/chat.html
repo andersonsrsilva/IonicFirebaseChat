@@ -3,9 +3,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list no-lines>
-    <ion-item *ngFor="let message of messages | async">{{ message.text }}</ion-item>
-  </ion-list>
+  <message-box *ngFor="let m of messages | async" [message]="m" [isFromSender]="(m.userId === sender.$key)"></message-box>
 </ion-content>
 
 <ion-footer>

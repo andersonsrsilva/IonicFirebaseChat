@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Message} from "../../models/message.model";
 
 @Component({
   selector: 'message-box',
@@ -6,11 +7,9 @@ import { Component } from '@angular/core';
 })
 export class MessageBoxComponent {
 
-  text: string;
+  @Input() message: Message;
+  @Input() isFromSender: boolean;
 
-  constructor() {
-    console.log('Hello MessageBoxComponent Component');
-    this.text = 'Hello World';
-  }
+  constructor() {}
 
 }

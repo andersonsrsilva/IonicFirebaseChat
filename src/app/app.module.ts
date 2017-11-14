@@ -17,7 +17,7 @@ import {CustomLoggedHeaderComponent} from '../components/custom-logged-header/cu
 import {CapitalizePipe} from '../pipes/capitalize/capitalize';
 import {ChatPage} from '../pages/chat/chat';
 import {ChatProvider} from '../providers/chat/chat';
-import { MessageProvider } from '../providers/message/message';
+import {MessageProvider} from '../providers/message/message';
 
 
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -64,7 +64,6 @@ const firebaseAuthConfig = {
     UserProvider,
     AuthProvider,
     ChatProvider,
-    MessageProvider,
     MessageProvider
   ]
 })

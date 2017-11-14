@@ -1,4 +1,4 @@
-<!-- Generated template for the MessageBoxComponent component -->
-<div>
-  {{text}}
+<div class="text" [ngClass]="{'sender-background': isFromSender}">
+  <p>{{ message.text }}</p>
+  <p class="timestamp">{{ message.timestamp | date:'dd/MM/y H:m' }}</p>
 </div>
