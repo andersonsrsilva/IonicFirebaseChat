@@ -31,6 +31,7 @@ export abstract class BaseComponent {
             this.authProvider.logout()
               .then(() => {
                 this.navCtrl.setRoot(SigninPage)
+                this.menuCtrl.enable(false, 'user-menu');
               });
           }
         },

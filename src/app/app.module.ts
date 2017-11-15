@@ -19,6 +19,8 @@ import {ChatPage} from '../pages/chat/chat';
 import {ChatProvider} from '../providers/chat/chat';
 import {MessageProvider} from '../providers/message/message';
 import {MessageBoxComponent} from "../components/message-box/message-box";
+import {UserInfoComponent} from "../components/user-info/user-info";
+import {UserMenuComponent} from "../components/user-menu/user-menu";
 
 
 const firebaseAppConfig: FirebaseAppConfig = {
@@ -44,6 +46,8 @@ const firebaseAuthConfig = {
     MyApp,
     SigninPage,
     SignupPage,
+    UserInfoComponent,
+    UserMenuComponent,
   ],
   imports: [
     BrowserModule,

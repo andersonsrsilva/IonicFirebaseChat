@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {MenuController, NavController} from 'ionic-angular';
 import {SignupPage} from '../signup/signup';
 import {User} from '../../models/user.model';
 import {UserProvider} from '../../providers/user/user';
@@ -23,6 +23,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
               public userProvider: UserProvider,
               public authProvider: AuthProvider,
+              public menuCtrl: MenuController,
               public chatProvider: ChatProvider) {
   }
 
@@ -33,6 +34,8 @@ export class HomePage {
   ionViewDidLoad() {
     this.chats = this.chatProvider.chats;
     this.users = this.userProvider.users;
+
+    this.menuCtrl.enable(true, 'user-menu');
   }
 
   filterItems(event: any): void {
