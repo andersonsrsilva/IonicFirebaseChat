@@ -3,12 +3,12 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BaseProvider} from '../base/base';
 import {Chat} from '../../models/chat.model';
-import {AngularFire, FirebaseAuthState, FirebaseObjectObservable, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, FirebaseAuthState, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 
 @Injectable()
 export class ChatProvider extends BaseProvider {
 
-  chats: FirebaseListObservable <Chat[]>;
+  chats: FirebaseListObservable<Chat[]>;
 
   constructor(public http: Http,
               public af: AngularFire) {
@@ -40,6 +40,18 @@ export class ChatProvider extends BaseProvider {
   getDeepChat(userId1: string, userId2: string): FirebaseObjectObservable<Chat> {
     return <FirebaseObjectObservable<Chat>>this.af.database.object(`/chats/${userId1}/${userId2}`)
       .catch(this.handleObservableError);
+  }
+
+  updatePhoto(chat: FirebaseObjectObservable<Chat>, chatPhoto: string, recipientUserPhoto: string): firebase.Promise<boolean> {
+    if (chatPhoto != recipientUserPhoto) {
+      return chat.update({
+        photo: recipientUserPhoto
+      }).then(() => {
+        return true;
+      }).catch(this.handlePromiseError);
+    }
+
+    return Promise.resolve(false);
   }
 
 }

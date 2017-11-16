@@ -47,6 +47,12 @@ export class ChatPage {
         this.chat1 = this.chatProvider.getDeepChat(this.sender.$key, this.recipient.$key);
         this.chat2 = this.chatProvider.getDeepChat(this.recipient.$key, this.sender.$key);
 
+        this.chat1
+          .first()
+          .subscribe((chat: Chat) => {
+            this.chatProvider.updatePhoto(this.chat1, chat.photo, this.recipient.photo);
+          });
+
         let doSubscription = () => {
           this.messages
             .subscribe((messages: Message[]) => {
@@ -64,7 +70,7 @@ export class ChatPage {
                 .getMessages(this.recipient.$key, this.sender.$key);
 
               doSubscription();
-            }else {
+            } else {
               doSubscription();
             }
           });
