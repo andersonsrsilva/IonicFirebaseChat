@@ -27,6 +27,9 @@
       <input type="file" (change)="onPhoto($event)">
     </ion-item>
 
+    <progress-bar *ngIf="uploadProgress" [progress]="uploadProgress"></progress-bar>
+
+    <br>
     <button ion-button type="submit" block [disabled]="profileForm.form.invalid">Save</button>
   </form>
 

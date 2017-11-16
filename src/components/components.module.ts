@@ -3,20 +3,23 @@ import {CustomLoggedHeaderComponent} from './custom-logged-header/custom-logged-
 import { MessageBoxComponent } from './message-box/message-box';
 import { UserInfoComponent } from './user-info/user-info';
 import { UserMenuComponent } from './user-menu/user-menu';
+import { ProgressBarComponent } from './progress-bar/progress-bar';
 
 @NgModule({
   declarations: [
     CustomLoggedHeaderComponent,
     MessageBoxComponent,
     UserInfoComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    ProgressBarComponent
   ],
   imports: [],
   exports: [
     CustomLoggedHeaderComponent,
     MessageBoxComponent,
     UserInfoComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    ProgressBarComponent
   ]
 })
 export class ComponentsModule {

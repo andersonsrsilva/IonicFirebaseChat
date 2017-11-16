@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ChangeDetectorRef, Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 import {AuthProvider} from "../../providers/auth/auth";
 import {User} from "../../models/user.model";
 import {UserProvider} from "../../providers/user/user";
@@ -13,8 +13,10 @@ export class UserProfilePage {
   currentUser: User;
   canEdit: boolean = false;
   private filePhoto: File;
+  uploadProgress: number;
 
   constructor(public authProvider: AuthProvider,
+              public cd: ChangeDetectorRef,
               public navCtrl: NavController,
               public navParams: NavParams,
               public userProvider: UserProvider) {
@@ -38,7 +40,8 @@ export class UserProfilePage {
       let uploadTask = this.userProvider.uploadPhoto(this.filePhoto, this.currentUser.$key);
 
       uploadTask.on('state_changed', (snapshot) => {
-
+        this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        this.cd.detectChanges();
       }, (error: Error) => {
         // catch error
       }, () => {
@@ -61,6 +64,7 @@ export class UserProfilePage {
     }).then(() => {
       this.canEdit = false;
       this.filePhoto = undefined;
+      this.uploadProgress = 0;
     });
   }
 
