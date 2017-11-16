@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {AngularFire, FirebaseAuthState, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {Inject, Injectable} from '@angular/core';
 import {User} from '../../models/user.model';
 import {BaseProvider} from '../base/base';
 import {Observable} from 'rxjs/Observable';
+import {AngularFire,FirebaseApp,FirebaseAuthState,FirebaseListObservable,FirebaseObjectObservable} from 'angularfire2';
+import firebase from 'firebase';
 
 @Injectable()
 export class UserProvider extends BaseProvider {
@@ -10,7 +11,8 @@ export class UserProvider extends BaseProvider {
   users: FirebaseListObservable<User[]>;
   currentUser: FirebaseObjectObservable<User>;
 
-  constructor(private af: AngularFire) {
+  constructor(private af: AngularFire,
+              @Inject(FirebaseApp) public firebaseApp: any,) {
     super();
     this.users = this.af.database.list('/users');
     this.listenAuthState();
@@ -61,6 +63,14 @@ export class UserProvider extends BaseProvider {
   getUserById(userId: string): FirebaseObjectObservable<User> {
     return <FirebaseObjectObservable<User>> this.af.database.object(`/users/${userId}`)
       .catch(this.handleObservableError);
+  }
+
+  uploadPhoto(file: File, userId: string): firebase.storage.UploadTask {
+    return this.firebaseApp
+      .storage()
+      .ref()
+      .child(`/users/${userId}`)
+      .put(file);
   }
 
 }
